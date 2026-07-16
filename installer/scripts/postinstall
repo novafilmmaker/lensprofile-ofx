@@ -1,0 +1,21 @@
+#!/bin/bash
+# Se ejecuta automaticamente al final de la instalacion del .pkg, como root.
+# No hace nada destructivo: solo deja permisos correctos y avisa si Resolve
+# esta corriendo (no lo cierra a la fuerza -- eso podria hacer perder trabajo).
+
+set -e
+
+BUNDLE="/Library/OFX/Plugins/LensProfileOFX.ofx.bundle"
+
+if [ -d "$BUNDLE" ]; then
+    chmod -R a+rX "$BUNDLE"
+fi
+
+if pgrep -x "Resolve" >/dev/null 2>&1; then
+    # display notification corre en el contexto del usuario que inicio la
+    # instalacion via GUI, asi que suele mostrarse bien aunque el script
+    # corra como root en un pkg instalado desde Installer.app.
+    osascript -e 'display notification "Reinicia DaVinci Resolve para que cargue el nuevo efecto." with title "LensProfileOFX instalado"' >/dev/null 2>&1 || true
+fi
+
+exit 0

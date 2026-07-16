@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<installer-gui-script minSpecVersion="1">
+    <title>LensProfileOFX (Fase 1 - prototipo)</title>
+    <welcome file="welcome.txt" mime-type="text/plain"/>
+    <readme file="readme.txt" mime-type="text/plain"/>
+    <options customize="never" require-scripts="false" rootVolumeOnly="true"/>
+    <domains enable_localSystem="true" enable_currentUserHome="false" enable_anywhere="false"/>
+    <volume-check>
+        <allowed-os-versions>
+            <os-version min="11.0"/>
+        </allowed-os-versions>
+    </volume-check>
+    <choices-outline>
+        <line choice="default">
+            <line choice="cl.bitacorafilms.LensProfileOFX.pkg"/>
+        </line>
+    </choices-outline>
+    <choice id="default"/>
+    <choice id="cl.bitacorafilms.LensProfileOFX.pkg" visible="false">
+        <pkg-ref id="cl.bitacorafilms.LensProfileOFX.pkg"/>
+    </choice>
+    <pkg-ref id="cl.bitacorafilms.LensProfileOFX.pkg" version="0.1.0" onConclusion="none">component.pkg</pkg-ref>
+</installer-gui-script>

@@ -1,0 +1,17 @@
+{
+  "profile_id": "canon_k35_50mm",
+  "display_name": "Canon K35 — 50mm (Fase 1, aproximado)",
+  "manufacturer": "Canon",
+  "family": "K35",
+  "focal_length_mm": 50,
+  "lens_type": "spherical",
+  "version": "0.1.0-fase1",
+  "notes": "Coeficientes de prueba, no calibrados contra una óptica real. Sirven para validar el pipeline de punta a punta (Fase 1). Se reemplazan por valores medidos/aproximados con mayor cuidado en la Fase 7.",
+
+  "chromatic_aberration": {
+    "model": "radial_per_channel",
+    "red":   { "k1": 0.0009, "k2": 0.0 },
+    "green": { "k1": 0.0,    "k2": 0.0 },
+    "blue":  { "k1": -0.0007, "k2": 0.0 }
+  }
+}

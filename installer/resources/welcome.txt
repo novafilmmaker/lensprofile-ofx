@@ -1,0 +1,16 @@
+LensProfileOFX -- Aberracion Cromatica (Fase 1, prototipo)
+Bitacora Films
+
+Este instalador copia el plugin OFX "Lens Profile - Aberracion Cromatica"
+a /Library/OFX/Plugins, donde DaVinci Resolve (version gratuita o Studio)
+lo puede cargar.
+
+Antes de continuar:
+
+  - Cerra DaVinci Resolve por completo si esta abierto (Resolve > Quit
+    Resolve, no alcanza con cerrar el proyecto).
+  - Vas a necesitar tu contrasena de administrador de macOS.
+
+Este es un prototipo en desarrollo (Fase 1 de la hoja de ruta): por ahora
+solo incluye aberracion cromatica con un perfil de prueba (Canon K35, no
+calibrado). Mas efectos y perfiles se agregan en fases siguientes.
