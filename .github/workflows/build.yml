@@ -22,22 +22,32 @@ jobs:
       - name: Compilar el plugin
         run: cmake --build build --config Release
 
-      - name: Armar el instalador .pkg
+      - name: Comprimir el bundle para instalar arrastrando en Finder
+        run: |
+          cd build
+          ditto -c -k --sequesterRsrc --keepParent LensProfileOFX.ofx.bundle ../LensProfileOFX.ofx.bundle.zip
+          cd ..
+
+      - name: Armar el instalador .pkg (opcional, sin firmar por ahora)
         run: |
           chmod +x installer/build_installer.sh installer/scripts/postinstall
           ./installer/build_installer.sh build/LensProfileOFX.ofx.bundle
 
-      - name: Guardar el .pkg como resultado del build
+      - name: Guardar los archivos como resultado del build
         uses: actions/upload-artifact@v4
         with:
-          name: LensProfileOFX-Installer
-          path: LensProfileOFX-Installer.pkg
+          name: LensProfileOFX-build
+          path: |
+            LensProfileOFX.ofx.bundle.zip
+            LensProfileOFX-Installer.pkg
 
-      - name: Publicar el .pkg como Release descargable
+      - name: Publicar como Release descargable
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           TAG="build-${{ github.run_number }}"
-          gh release create "$TAG" LensProfileOFX-Installer.pkg \
+          gh release create "$TAG" \
+            LensProfileOFX.ofx.bundle.zip \
+            LensProfileOFX-Installer.pkg \
             --title "LensProfileOFX (Fase 1) - build ${{ github.run_number }}" \
-            --notes "Instalador .pkg generado automaticamente. Doble clic para instalar en DaVinci Resolve (macOS)."
+            --notes "Usar LensProfileOFX.ofx.bundle.zip por ahora (arrastrar a mano). El .pkg todavia no esta firmado por Apple."
