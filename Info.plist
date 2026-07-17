@@ -5,7 +5,7 @@
     <key>CFBundleDevelopmentRegion</key>
     <string>en</string>
     <key>CFBundleExecutable</key>
-    <string>LensProfileOFX</string>
+    <string>LensProfileOFX.ofx</string>
     <key>CFBundleIdentifier</key>
     <string>cl.bitacorafilms.LensProfileOFX</string>
     <key>CFBundleInfoDictionaryVersion</key>
