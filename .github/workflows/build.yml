@@ -1,0 +1,43 @@
+name: Compilar instalador LensProfileOFX
+
+on:
+  push:
+    branches: [ main, master ]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build-installer:
+    runs-on: macos-latest
+
+    steps:
+      - name: Descargar el codigo del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar el proyecto (CMake)
+        run: cmake -S . -B build -G "Unix Makefiles" -DCMAKE_BUILD_TYPE=Release
+
+      - name: Compilar el plugin
+        run: cmake --build build --config Release
+
+      - name: Armar el instalador .pkg
+        run: |
+          chmod +x installer/build_installer.sh installer/scripts/postinstall
+          ./installer/build_installer.sh build/LensProfileOFX.ofx.bundle
+
+      - name: Guardar el .pkg como resultado del build
+        uses: actions/upload-artifact@v4
+        with:
+          name: LensProfileOFX-Installer
+          path: LensProfileOFX-Installer.pkg
+
+      - name: Publicar el .pkg como Release descargable
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          TAG="build-${{ github.run_number }}"
+          gh release create "$TAG" LensProfileOFX-Installer.pkg \
+            --title "LensProfileOFX (Fase 1) - build ${{ github.run_number }}" \
+            --notes "Instalador .pkg generado automaticamente. Doble clic para instalar en DaVinci Resolve (macOS)."
